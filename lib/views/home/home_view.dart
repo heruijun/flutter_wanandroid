@@ -1,6 +1,7 @@
 library home_view;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wanandroid/core/models/home_account.dart';
 import 'package:flutter_wanandroid/core/provider/view_state_widget.dart';
 import 'package:flutter_wanandroid/view_model/home_model.dart';
 import 'package:stacked/stacked.dart';
@@ -21,8 +22,21 @@ class HomeView extends StatelessWidget {
           }
           return CustomScrollView(
             slivers: <Widget>[
+              SliverToBoxAdapter(),
               SliverToBoxAdapter(
-                child: Text(model.homeAccounts[0].name),
+                child: Wrap(
+                  children: model.homeAccounts?.map((HomeAccount o) {
+                    return Container(
+                      margin: const EdgeInsets.only(left: 10, right: 10),
+                      child: FlatButton(
+                        child:
+                            Text(o.name, style: TextStyle(color: Colors.white)),
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () => null,
+                      ),
+                    );
+                  })?.toList(),
+                ),
               ),
             ],
           );
