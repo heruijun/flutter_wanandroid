@@ -13,6 +13,7 @@ dependencies:
     logger: ^0.7.0+2
     get_it: ^3.0.3
     equatable: ^1.0.1
+    oktoast: ^2.3.2
     dio: ^3.0.9
     event_bus:  ^1.1.1
     cached_network_image: ^2.2.0+1

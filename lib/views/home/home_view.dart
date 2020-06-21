@@ -1,14 +1,19 @@
 library home_view;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/core/models/home_account.dart';
 import 'package:flutter_wanandroid/core/provider/view_state_widget.dart';
 import 'package:flutter_wanandroid/view_model/home_model.dart';
+import 'package:flutter_wanandroid/widgets/banner_image.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var bannerHeight = MediaQuery.of(context).size.width * 5 / 10;
     return Scaffold(
       appBar: AppBar(
         title: Text('首页'),
@@ -20,12 +25,27 @@ class HomeView extends StatelessWidget {
           if (model.busy) {
             return ViewStateBusyWidget();
           }
+          var banners = model?.banners ?? [];
+          var homeAccounts = model?.homeAccounts ?? [];
           return CustomScrollView(
             slivers: <Widget>[
-              SliverToBoxAdapter(),
+              SliverAppBar(
+                // 加载中并且亮色模式下,状态栏文字为黑色
+                brightness: Theme.of(context).brightness == Brightness.light &&
+                        model.busy
+                    ? Brightness.light
+                    : Brightness.dark,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: BannerWidget(),
+                  centerTitle: true,
+                  title: Text('玩Android'),
+                ),
+                expandedHeight: bannerHeight,
+                pinned: true,
+              ),
               SliverToBoxAdapter(
                 child: Wrap(
-                  children: model.homeAccounts?.map((HomeAccount o) {
+                  children: homeAccounts.map((HomeAccount o) {
                     return Container(
                       margin: const EdgeInsets.only(left: 10, right: 10),
                       child: FlatButton(
@@ -42,6 +62,38 @@ class HomeView extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class BannerWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      child: Consumer<HomeModel>(builder: (_, homeModel, __) {
+        if (homeModel.busy) {
+          return CupertinoActivityIndicator();
+        } else {
+          var banners = homeModel?.banners ?? [];
+          return Swiper(
+            loop: true,
+            autoplay: true,
+            autoplayDelay: 5000,
+            pagination: SwiperPagination(),
+            itemCount: banners.length,
+            itemBuilder: (ctx, index) {
+              return InkWell(
+                  onTap: () {
+                    var banner = banners[index];
+                  },
+                  child: BannerImage(banners[index].imagePath));
+            },
+          );
+        }
+      }),
     );
   }
 }
