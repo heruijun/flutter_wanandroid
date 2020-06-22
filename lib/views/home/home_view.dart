@@ -6,6 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/core/models/home_account.dart';
 import 'package:flutter_wanandroid/core/provider/view_state_widget.dart';
 import 'package:flutter_wanandroid/view_model/home_model.dart';
+import 'package:flutter_wanandroid/widgets/animated_provider.dart';
 import 'package:flutter_wanandroid/widgets/banner_image.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -13,11 +14,8 @@ import 'package:stacked/stacked.dart';
 class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var bannerHeight = MediaQuery.of(context).size.width * 5 / 10;
+    var bannerHeight = MediaQuery.of(context).size.width * 5 / 11;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('首页'),
-      ),
       body: ViewModelBuilder<HomeModel>.reactive(
         viewModelBuilder: () => HomeModel(),
         onModelReady: (model) => model.initData(),
@@ -25,7 +23,6 @@ class HomeView extends StatelessWidget {
           if (model.busy) {
             return ViewStateBusyWidget();
           }
-          var banners = model?.banners ?? [];
           var homeAccounts = model?.homeAccounts ?? [];
           return CustomScrollView(
             slivers: <Widget>[
@@ -38,7 +35,10 @@ class HomeView extends StatelessWidget {
                 flexibleSpace: FlexibleSpaceBar(
                   background: BannerWidget(),
                   centerTitle: true,
-                  title: Text('玩Android'),
+                  title: EmptyAnimatedSwitcher(
+                    display: false,
+                    child: Text('玩 Android'),
+                  ),
                 ),
                 expandedHeight: bannerHeight,
                 pinned: true,
