@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
         viewModelBuilder: () => HomeModel(),
         onModelReady: (model) => model.initData(),
         builder: (context, model, child) {
-          if (model.busy) {
+          if (model.isBusy) {
             return ViewStateBusyWidget();
           }
           var homeAccounts = model?.homeAccounts ?? [];
@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
               SliverAppBar(
                 // 加载中并且亮色模式下,状态栏文字为黑色
                 brightness: Theme.of(context).brightness == Brightness.light &&
-                        model.busy
+                        model.isBusy
                     ? Brightness.light
                     : Brightness.dark,
                 flexibleSpace: FlexibleSpaceBar(
@@ -74,7 +74,7 @@ class BannerWidget extends StatelessWidget {
         color: Theme.of(context).scaffoldBackgroundColor,
       ),
       child: Consumer<HomeModel>(builder: (_, homeModel, __) {
-        if (homeModel.busy) {
+        if (homeModel.isBusy) {
           return CupertinoActivityIndicator();
         } else {
           var banners = homeModel?.banners ?? [];

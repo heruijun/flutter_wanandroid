@@ -13,13 +13,13 @@ class HomeModel extends ViewStateModel {
   List<Banner> get banners => _banners;
 
   initData() async {
-    busy = true;
+    setBusy(true);
     List<Future> futures = [];
     futures.add(WanAndroidRepository.fetchBanners());
     futures.add(WanAndroidRepository.fetchWxarticle());
     var result = await Future.wait(futures);
     _banners = result[0];
     _homeAccounts = result[1];
-    busy = false;
+    setBusy(false);
   }
 }

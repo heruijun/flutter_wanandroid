@@ -1,4 +1,4 @@
-import 'package:flutter_wanandroid/core/base/base_view_model.dart';
+import 'package:stacked/stacked.dart';
 
 class ViewStateModel extends BaseViewModel {
 
