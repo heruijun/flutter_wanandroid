@@ -10,6 +10,7 @@ class TestLikeCount extends ViewStateModel {
     notifyListeners();
   }
 
+  // TODO
   initData() {
     _count = 0;
   }
