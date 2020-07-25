@@ -2,6 +2,7 @@ import '../../core/base/base_service.dart';
 import 'package:flutter/material.dart';
 
 class NavigatorService extends BaseService {
+  // 生成navigatorKey，以便于通过navigatorKey获取Navigator对象，这样做的好处是避免路由跳转每次都需要传入context参数
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   Future<T> navigateToPage<T>(MaterialPageRoute<T> pageRoute) async {
@@ -16,7 +17,7 @@ class NavigatorService extends BaseService {
   Future<T> navigateToPageWithReplacement<T>(
       MaterialPageRoute<T> pageRoute) async {
     log.i('navigateToPageWithReplacement: '
-      'pageRoute: ${pageRoute.settings.name}');
+        'pageRoute: ${pageRoute.settings.name}');
     if (navigatorKey.currentState == null) {
       log.e('navigateToPageWithReplacement: Navigator State is null');
       return null;

@@ -1,3 +1,4 @@
+import 'package:flutter_wanandroid/view_model/test_provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import '../core/locator.dart';
@@ -17,5 +18,7 @@ class ProviderInjector {
 
   static List<SingleChildWidget> _dependentServices = [];
 
-  static List<SingleChildWidget> _consumableServices = [];
+  static List<SingleChildWidget> _consumableServices = [
+    ChangeNotifierProvider<TestLikeCount>(create: (context) => TestLikeCount()),
+  ];
 }

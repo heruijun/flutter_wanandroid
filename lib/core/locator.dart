@@ -1,3 +1,5 @@
+import 'package:flutter_wanandroid/view_model/test_provider.dart';
+
 import '../core/logger.dart';
 import '../core/services/navigator_service.dart';
 import 'package:get_it/get_it.dart';

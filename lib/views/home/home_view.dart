@@ -6,6 +6,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_wanandroid/core/models/home_account.dart';
 import 'package:flutter_wanandroid/core/provider/view_state_widget.dart';
 import 'package:flutter_wanandroid/view_model/home_model.dart';
+import 'package:flutter_wanandroid/views/testprovider/index.dart';
 import 'package:flutter_wanandroid/widgets/animated_provider.dart';
 import 'package:flutter_wanandroid/widgets/banner_image.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,9 @@ class HomeView extends StatelessWidget {
                   })?.toList(),
                 ),
               ),
+              SliverToBoxAdapter(
+                child: IndexProviderPage(),
+              )
             ],
           );
         },
